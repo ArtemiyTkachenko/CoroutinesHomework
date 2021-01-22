@@ -1,6 +1,18 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.4.20"
+    ext {
+        kotlin_version = "1.4.20"
+        coroutines_version = "1.4.2"
+        nav_version = "2.3.2"
+        lifecycle_version = '2.2.0'
+        retrofit2_version = '2.6.2'
+        moshi_version = '1.9.2'
+        moshiConverter_version ='2.7.2'
+        loggingInterceptor_version = '4.7.2'
+        recyclerView_version = '1.1.0'
+        constraintlayout_version = '2.0.4'
+        material_version = '1.2.0'
+    }
     repositories {
         google()
         jcenter()
