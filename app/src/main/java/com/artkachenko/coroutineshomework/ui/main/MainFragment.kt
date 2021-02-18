@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.artkachenko.coroutineshomework.MovieApp
 import com.artkachenko.coroutineshomework.R
 import com.artkachenko.coroutineshomework.base.BaseFragment
 import com.artkachenko.coroutineshomework.databinding.MainFragmentBinding
@@ -15,10 +16,12 @@ import com.artkachenko.coroutineshomework.model.Movie
 import com.artkachenko.coroutineshomework.utils.onLoadMore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
+import javax.inject.Inject
 
 class MainFragment : BaseFragment(R.layout.main_fragment), MainFragmentCallbacks {
 
-    private val viewModel by viewModels<MainViewModel>()
+    @Inject
+    lateinit var viewModel: MainViewModel
 
     private val movieAdapter by lazy {
         MovieAdapter(this)
@@ -31,6 +34,7 @@ class MainFragment : BaseFragment(R.layout.main_fragment), MainFragmentCallbacks
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        MovieApp.getApplicationComponent().inject(this)
         binding = MainFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -38,7 +42,7 @@ class MainFragment : BaseFragment(R.layout.main_fragment), MainFragmentCallbacks
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with (binding.recycler) {
+        with(binding.recycler) {
             adapter = movieAdapter
             layoutManager = GridLayoutManager(requireContext(), 3)
             onLoadMore {
