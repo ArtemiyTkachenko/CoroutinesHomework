@@ -4,6 +4,7 @@ buildscript {
         kotlin_version = "1.4.20"
         coroutines_version = "1.4.2"
         nav_version = "2.3.2"
+        retrofit_version = '2.7.2'
         lifecycle_version = '2.2.0'
         retrofit2_version = '2.6.2'
         moshi_version = '1.9.2'
@@ -16,6 +17,7 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.1"
