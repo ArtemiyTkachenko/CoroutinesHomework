@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.artkachenko.coroutineshomework.MovieApp
 import com.artkachenko.coroutineshomework.R
 import com.artkachenko.coroutineshomework.base.BaseFragment
 import com.artkachenko.coroutineshomework.databinding.MainFragmentBinding
+import com.artkachenko.coroutineshomework.di.components.DaggerMainComponent
+import com.artkachenko.coroutineshomework.di.components.MainComponent
 import com.artkachenko.coroutineshomework.model.Movie
 import com.artkachenko.coroutineshomework.utils.onLoadMore
 import kotlinx.coroutines.*
@@ -21,7 +24,9 @@ import javax.inject.Inject
 class MainFragment : BaseFragment(R.layout.main_fragment), MainFragmentCallbacks {
 
     @Inject
-    lateinit var viewModel: MainViewModel
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel by viewModels<MainViewModel> { viewModelFactory }
 
     private val movieAdapter by lazy {
         MovieAdapter(this)
@@ -34,7 +39,7 @@ class MainFragment : BaseFragment(R.layout.main_fragment), MainFragmentCallbacks
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        MovieApp.getApplicationComponent().inject(this)
+        MainComponent.injectFragment(this)
         binding = MainFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }

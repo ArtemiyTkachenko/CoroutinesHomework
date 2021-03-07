@@ -8,6 +8,7 @@ import com.artkachenko.coroutineshomework.ui.main.MainViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
+import dagger.Reusable
 import dagger.multibindings.IntoMap
 import kotlin.reflect.KClass
 
@@ -16,19 +17,9 @@ import kotlin.reflect.KClass
 @MapKey
 internal annotation class ViewModelKey(val value: KClass<out ViewModel>)
 
-@Module
-abstract class ViewModelModule {
+@Module(includes = [MainModule::class, DetailModule::class])
+interface ViewModelModule {
     @Binds
-    abstract fun bindViewModelFactory(factory: DaggerViewModelFactory): ViewModelProvider.Factory
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(MainViewModel::class)
-    internal abstract fun mainViewModel(viewModel: MainViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(DetailViewModel::class)
-    internal abstract fun detailViewModel(viewModel: DetailViewModel): ViewModel
-
+    @Reusable
+    fun bindViewModelFactory(factory: DaggerViewModelFactory): ViewModelProvider.Factory
 }

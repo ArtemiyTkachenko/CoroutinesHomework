@@ -15,7 +15,6 @@ import retrofit2.http.Query
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 class MovieRepository @Inject constructor(private val movieService: MovieService) {
 
     suspend fun getMovieList(page: Int): PaginatedResult<Movie> {

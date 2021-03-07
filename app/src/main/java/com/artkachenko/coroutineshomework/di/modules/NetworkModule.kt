@@ -17,13 +17,13 @@ object NetworkModule {
 
     @Provides
     @Reusable
-    internal fun provideMovieService(retrofit: Retrofit): MovieService {
+    fun provideMovieService(retrofit: Retrofit): MovieService {
         return retrofit.create(MovieService::class.java)
     }
 
     @Provides
     @Reusable
-    internal fun provideHttpClient(): OkHttpClient {
+    fun provideHttpClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
         val headerInterceptor = HeaderInterceptor()
         return OkHttpClient.Builder()
@@ -38,7 +38,7 @@ object NetworkModule {
 
     @Provides
     @Reusable
-    internal fun provideRetrofitInstance(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofitInstance(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(BASE_URL)
