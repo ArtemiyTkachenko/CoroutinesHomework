@@ -50,55 +50,41 @@ android {
     }
 }
 
+apply from: "$project.rootDir/scripts/deps_versions.gradle"
+
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
-    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+    implementation kotlin
+    implementation androidX.values()
+    implementation material
+    implementation constraintLayout
 
-    //ViewModel
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation viewModelDependencies.values()
 
-    //Couroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation coroutineDependencies.values()
 
-    //Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation navigationDependencies.values()
 
-    //OkHttp3
-    implementation "com.squareup.okhttp3:logging-interceptor:$loggingInterceptor_version"
+    implementation okhttp
 
-    //RecyclerView
-    implementation "androidx.recyclerview:recyclerview:$recyclerView_version"
+    implementation recycler
 
-    //Retrofit
-    implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofit2_version"
+    implementation retrofitDependencies.values()
 
-    //Moshi
-    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
-    implementation "com.squareup.moshi:moshi-adapters:$moshi_version"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+    implementation moshiDependencies.values()
+    kapt moshiKapt
 
-    //Multidex
-    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation multiDex
 
-    //Coil
-    implementation("io.coil-kt:coil:1.0.0")
+    implementation coil
 
-    //Dagger2
-    implementation "com.google.dagger:dagger:$dagger2_version"
-    implementation "com.google.dagger:dagger-android:$dagger2_version"
-    implementation "com.google.dagger:dagger-android-support:$dagger2_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
-    kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
+    implementation dagger.values()
+    kapt daggerCompiler.values()
 
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation junit
+    androidTestImplementation androidTest.values()
+
+    implementation project(':core')
+    implementation project(':main')
+    implementation project(':detail')
 }
