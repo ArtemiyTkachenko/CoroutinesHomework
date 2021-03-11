@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/main">
+    app:startDestination="@id/main"
+    >
 
     <fragment
         android:id="@+id/main"
-        android:name="com.artkachenko.coroutineshomework.ui.main.MainFragment"
+        android:name="com.artkachenko.main.ui.MainFragment"
         tools:layout="@layout/main_fragment" >
         <action
             android:id="@+id/main_to_detail"
@@ -15,7 +16,7 @@
     </fragment>
 
     <fragment android:id="@+id/detail"
-        android:name="com.artkachenko.coroutineshomework.ui.detail.DetailFragment"
+        android:name="com.artkachenko.detail.ui.DetailFragment"
         tools:layout="@layout/detail_fragment"/>
 
 </navigation>

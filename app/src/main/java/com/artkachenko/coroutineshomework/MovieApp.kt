@@ -1,53 +1,25 @@
 package com.artkachenko.coroutineshomework
 
-import android.app.Application
-import android.content.Context
-import android.os.StrictMode
-import androidx.multidex.BuildConfig
 import androidx.multidex.MultiDexApplication
-import com.artkachenko.coroutineshomework.di.components.ApplicationComponent
-import com.artkachenko.coroutineshomework.di.components.DaggerApplicationComponent
-import com.artkachenko.coroutineshomework.utils.debugLog
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import javax.inject.Inject
+import com.artkachenko.core_api.mediator.AppWithFacade
+import com.artkachenko.core_api.mediator.ProvidersFacade
+import com.artkachenko.coroutineshomework.di.components.FacadeComponent
 
-class MovieApp : MultiDexApplication() {
+class MovieApp : MultiDexApplication(), AppWithFacade {
+    override fun getFacade(): ProvidersFacade {
+        return facadeComponent ?: FacadeComponent.init(this).also {
+            facadeComponent = it
+        }
+    }
 
     override fun onCreate() {
         super.onCreate()
-        initDagger()
-        if (BuildConfig.DEBUG) {
-            StrictMode.setThreadPolicy(
-                StrictMode.ThreadPolicy.Builder()
-                    .detectDiskReads()
-                    .detectDiskWrites()
-                    .detectNetwork()
-                    .penaltyLog()
-                    .build()
-            )
-            StrictMode.setVmPolicy(
-                StrictMode.VmPolicy.Builder()
-                    .detectLeakedSqlLiteObjects()
-                    .detectLeakedClosableObjects()
-                    .penaltyLog()
-                    .penaltyDeath()
-                    .build()
-            )
-        }
+        (getFacade() as FacadeComponent).inject(this)
     }
 
-    private fun initDagger() {
-        applicationComponent = DaggerApplicationComponent.builder().app(this).build()
-        applicationComponent.inject(this)
-    }
 
     companion object {
 
-        private lateinit var applicationComponent : ApplicationComponent
-
-        fun getApplicationComponent() : ApplicationComponent {
-            return applicationComponent
-        }
+        private var facadeComponent: FacadeComponent? = null
     }
 }

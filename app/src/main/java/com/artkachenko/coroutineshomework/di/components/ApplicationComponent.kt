@@ -1,29 +1,36 @@
 package com.artkachenko.coroutineshomework.di.components
 
-import androidx.lifecycle.ViewModelProvider
-import com.artkachenko.coroutineshomework.MovieApp
-import com.artkachenko.coroutineshomework.di.modules.NetworkModule
-import com.artkachenko.coroutineshomework.di.modules.UIModule
-import com.artkachenko.coroutineshomework.di.modules.ViewModelModule
-import com.artkachenko.coroutineshomework.network.MovieService
-import com.artkachenko.coroutineshomework.ui.detail.DetailFragment
-import com.artkachenko.coroutineshomework.ui.main.MainFragment
+import android.app.Application
+import android.content.Context
+import com.artkachenko.core_api.mediator.AppProvider
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AndroidInjectionModule::class, NetworkModule::class, ViewModelModule::class, UIModule::class])
-interface ApplicationComponent {
-    fun inject(app: MovieApp)
-    fun provideMovieService(): MovieService
-    fun provideViewModelFactory(): ViewModelProvider.Factory
+@Component
+//    (modules = [AndroidInjectionModule::class])
+interface ApplicationComponent: AppProvider {
+    companion object {
+
+        private var appComponent: AppProvider? = null
+
+        fun create(application: Application): AppProvider {
+            return appComponent ?: DaggerApplicationComponent
+                .builder()
+                .application(application.applicationContext)
+                .build().also {
+                    appComponent = it
+                }
+        }
+    }
 
     @Component.Builder
     interface Builder {
+
         @BindsInstance
-        fun app(app: MovieApp): Builder
+        fun application(context: Context): Builder
 
         fun build(): ApplicationComponent
     }
