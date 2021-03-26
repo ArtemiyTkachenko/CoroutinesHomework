@@ -56,6 +56,7 @@ dependencies {
 
     implementation project(':utils')
     implementation project(':ui_core')
+    implementation project(':navigation')
     api project(':core')
     implementation kotlin
     implementation androidX.values()

@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.artkachenko.core_api.base.BaseFragment
 import com.artkachenko.core_api.dto.Movie
 import com.artkachenko.main.R
 import com.artkachenko.main.databinding.MainFragmentBinding
+import com.artkachenko.main.di.EagerTrigger
 import com.artkachenko.utils.onLoadMore
 import com.artkachenko.main.di.MainComponent
 import kotlinx.coroutines.*
@@ -23,6 +25,9 @@ class MainFragment : BaseFragment(R.layout.main_fragment), MainFragmentCallbacks
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel by viewModels<MainViewModel> { viewModelFactory }
+
+    @Inject
+    lateinit var eagerTrigger: EagerTrigger
 
     private val movieAdapter by lazy {
         MovieAdapter(this)
@@ -59,11 +64,11 @@ class MainFragment : BaseFragment(R.layout.main_fragment), MainFragmentCallbacks
     }
 
     override fun getMovieDetails(movie: Movie) {
-//        runCatching {
-//            val bundle = Bundle().apply {
-//                putLong("movieId", movie.id ?: -1)
-//            }
-//            findNavController().navigate(R.id.main_to_detail, bundle)
-//        }.onFailure { it.printStackTrace() }
+        runCatching {
+            val bundle = Bundle().apply {
+                putLong("movieId", movie.id ?: -1)
+            }
+            findNavController().navigate(R.id.main_to_detail, bundle)
+        }.onFailure { it.printStackTrace() }
     }
 }

@@ -12,14 +12,10 @@ import javax.inject.Singleton
 @Module
 abstract class MainModule {
 
-    @Binds
-    @Singleton
-    abstract fun bindsCache(repositoryImpl: MainNetworkRepositoryImpl): MainNetworkRepository
-
     companion object {
 
         @Provides
-        @Singleton
+        @MainScope
         @JvmStatic
         fun provideMainViewModel(
             map: @JvmSuppressWildcards MutableMap<Class<out ViewModel>, ViewModel>,
@@ -27,5 +23,12 @@ abstract class MainModule {
         ): ViewModel = MainViewModel(repositoryImpl).also {
             map[MainViewModel::class.java] = it
         }
+
+        @Provides
+        @MainScope
+        @JvmStatic
+        fun provideDummy(viewModel: ViewModel) = EagerTrigger()
     }
 }
+
+class EagerTrigger

@@ -9,8 +9,7 @@ import com.artkachenko.coroutineshomework.MovieApp
 import dagger.Component
 
 @Component(
-    dependencies = [AppProvider::class, NetworkProvider::class],
-    modules = [MediatorsBindings::class]
+    dependencies = [AppProvider::class, NetworkProvider::class]
 )
 interface FacadeComponent : ProvidersFacade {
 

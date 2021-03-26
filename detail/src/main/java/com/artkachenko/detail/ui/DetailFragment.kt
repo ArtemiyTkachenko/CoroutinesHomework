@@ -11,6 +11,7 @@ import com.artkachenko.core_api.base.BaseFragment
 import com.artkachenko.detail.R
 import com.artkachenko.detail.databinding.DetailFragmentBinding
 import com.artkachenko.detail.di.DetailComponent
+import com.artkachenko.detail.di.EagerTrigger
 import com.artkachenko.utils.loadImage
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -23,6 +24,9 @@ class DetailFragment : BaseFragment(R.layout.detail_fragment) {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel by viewModels<DetailViewModel> { viewModelFactory }
+
+    @Inject
+    lateinit var eagerTrigger: EagerTrigger
 
     private val movieId by lazy {
         arguments?.getLong("movieId")
