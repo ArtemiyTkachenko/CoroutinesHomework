@@ -6,11 +6,10 @@ import com.artkachenko.core_api.mediator.ProvidersFacade
 import com.artkachenko.core_api.viewmodel.ViewModelsProvider
 import com.artkachenko.detail.ui.DetailFragment
 import dagger.Component
-import java.lang.annotation.Documented
 import javax.inject.Scope
 
 @Scope
-@Documented
+@MustBeDocumented
 @Retention(AnnotationRetention.RUNTIME)
 annotation class DetailScope
 

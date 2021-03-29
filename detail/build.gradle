@@ -54,10 +54,7 @@ apply from: "$project.rootDir/scripts/deps_versions.gradle"
 
 dependencies {
 
-    implementation project(':core_api')
-    implementation project(':utils')
     implementation project(':ui_core')
-    api project(':core')
 
     implementation kotlin
     implementation androidX.values()

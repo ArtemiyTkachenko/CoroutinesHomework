@@ -13,8 +13,8 @@ import com.artkachenko.core_api.dto.Movie
 import com.artkachenko.main.R
 import com.artkachenko.main.databinding.MainFragmentBinding
 import com.artkachenko.main.di.EagerTrigger
-import com.artkachenko.utils.onLoadMore
 import com.artkachenko.main.di.MainComponent
+import com.artkachenko.utils.onLoadMore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
