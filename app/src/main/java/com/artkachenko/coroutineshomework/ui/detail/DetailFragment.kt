@@ -6,16 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.artkachenko.coroutineshomework.R
 import com.artkachenko.coroutineshomework.base.BaseFragment
 import com.artkachenko.coroutineshomework.databinding.DetailFragmentBinding
+import com.artkachenko.coroutineshomework.di.components.DetailComponent
 import com.artkachenko.coroutineshomework.utils.loadImage
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class DetailFragment : BaseFragment(R.layout.detail_fragment) {
 
-    private val viewModel by viewModels<DetailViewModel>()
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel by viewModels<DetailViewModel> { viewModelFactory }
 
     private val movieId by lazy {
         arguments?.getLong("movieId")
@@ -28,6 +34,7 @@ class DetailFragment : BaseFragment(R.layout.detail_fragment) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        DetailComponent.injectFragment(this)
         binding = DetailFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }

@@ -1,23 +1,32 @@
-package com.artkachenko.coroutineshomework.network
+package com.artkachenko.coroutineshomework.di.modules
 
 import com.artkachenko.coroutineshomework.BuildConfig
-import com.artkachenko.coroutineshomework.model.Movie
-import com.artkachenko.coroutineshomework.model.PaginatedResult
+import com.artkachenko.coroutineshomework.network.HeaderInterceptor
+import com.artkachenko.coroutineshomework.network.MovieService
 import com.artkachenko.coroutineshomework.utils.BASE_URL
-import kotlinx.coroutines.flow.Flow
+import dagger.Module
+import dagger.Provides
+import dagger.Reusable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Query
 
-object MovieClient {
+@Module
+object NetworkModule {
 
-    private val okHttpClient by lazy {
+    @Provides
+    @Reusable
+    fun provideMovieService(retrofit: Retrofit): MovieService {
+        return retrofit.create(MovieService::class.java)
+    }
+
+    @Provides
+    @Reusable
+    fun provideHttpClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
         val headerInterceptor = HeaderInterceptor()
-        OkHttpClient.Builder()
+        return OkHttpClient.Builder()
             .addInterceptor(headerInterceptor)
             .addInterceptor(
                 if (BuildConfig.DEBUG) loggingInterceptor.setLevel(
@@ -27,15 +36,13 @@ object MovieClient {
             .build()
     }
 
-    private val retrofit by lazy {
-        Retrofit.Builder()
+    @Provides
+    @Reusable
+    fun provideRetrofitInstance(okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
-    }
-
-    val service by lazy {
-        retrofit.create(MovieService::class.java)
     }
 }

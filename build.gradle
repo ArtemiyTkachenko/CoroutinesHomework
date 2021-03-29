@@ -13,6 +13,7 @@ buildscript {
         recyclerView_version = '1.1.0'
         constraintlayout_version = '2.0.4'
         material_version = '1.2.0'
+        dagger2_version = '2.28.3'
     }
     repositories {
         google()
