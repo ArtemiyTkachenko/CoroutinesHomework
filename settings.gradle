@@ -1,2 +1,10 @@
+include ':navigation'
+include ':ui_core'
+include ':utils'
+include ':core_impl'
+include ':core_api'
+include ':main'
+include ':detail'
+include ':core'
 include ':app'
 rootProject.name = "CoroutinesHomework"
